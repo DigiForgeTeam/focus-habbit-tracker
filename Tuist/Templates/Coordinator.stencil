@@ -1,0 +1,9 @@
+import UIKit
+
+class {{ name }}Coordinator {
+    weak var viewController: UIViewController?
+    
+    func navigateToNextScreen() {
+        // Navigation logic
+    }
+}

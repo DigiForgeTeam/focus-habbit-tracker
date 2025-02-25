@@ -1,0 +1,10 @@
+import UIKit
+
+class {{ name }}ViewController: UIViewController {
+    var presenter: {{ name }}PresenterProtocol!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.viewDidLoad()
+    }
+}

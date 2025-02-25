@@ -1,0 +1,7 @@
+protocol {{ name }}ModelProtocol {
+    // Define Model functions
+}
+
+class {{ name }}Model: {{ name }}ModelProtocol {
+    // Implement Model logic
+}

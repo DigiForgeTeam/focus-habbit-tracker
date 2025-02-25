@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+    <key>name</key>
+    <string>Module</string>
+    <key>description</key>
+    <string>Template for creating a new module with MVP architecture</string>
+    <key>options</key>
+    <array>
+        <dict>
+            <key>name</key>
+            <string>name</string>
+            <key>description</key>
+            <string>The name of the module</string>
+            <key>type</key>
+            <string>string</string>
+            <key>default</key>
+            <string>NewModule</string>
+        </dict>
+    </array>
+</dict>
+</plist>

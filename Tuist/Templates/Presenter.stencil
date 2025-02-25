@@ -1,0 +1,11 @@
+protocol {{ name }}PresenterProtocol {
+    func viewDidLoad()
+}
+
+class {{ name }}Presenter: {{ name }}PresenterProtocol {
+    weak var view: {{ name }}ViewController?
+    
+    func viewDidLoad() {
+        
+    }
+}
