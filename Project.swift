@@ -17,17 +17,17 @@ let project = Project(
             product: .app,
             bundleId: bundleID,
             deploymentTargets: .iOS(iOSTargetVersion),
-            infoPlist: .extendingDefault(with: [:]),
+            infoPlist: makeInfoPlist(),
             sources: ["\(basePath)/Sources/**"],
             resources: ["\(basePath)/Resources/**"],
             dependencies: [
                 .project(
                     target: "AuthModule",
-                    path: "../Modules/AuthModule"
+                    path: "Modules/AuthModule"
                 ),
                 .project(
                     target: "WelcomeModule",
-                    path: "../Modules/WelcomeModule"
+                    path: "Modules/WelcomeModule"
                 )
             ]
         ),
@@ -42,7 +42,7 @@ let project = Project(
             dependencies: [
                 .target(name: projectName)
             ]
-        )
+        ),
     ]
 )
 

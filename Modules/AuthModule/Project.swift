@@ -10,7 +10,17 @@ let project = Project(
             product: .framework,
             bundleId: "com.digicom.AuthModule",
             infoPlist: .default,
-            sources: ["Sources/**"],
+            sources: ["Sources/**/*.swift"],
+            resources: [],
+            dependencies: []
+        ),
+        .target(
+            name: "WelcomeModule",
+            destinations: .iOS,
+            product: .framework,
+            bundleId: "com.digicom.WelcomeModule",
+            infoPlist: .default,
+            sources: ["Sources/**/*.swift"],
             resources: [],
             dependencies: []
         )
