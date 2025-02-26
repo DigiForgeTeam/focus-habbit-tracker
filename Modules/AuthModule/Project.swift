@@ -1,27 +1,19 @@
 import ProjectDescription
 
+let projectName = "Focus-Habit-Tracker"
+
 let project = Project(
-    name: "AuthModule",
+    name: projectName,
     organizationName: "com.digicom",
     targets: [
         .target(
             name: "AuthModule",
             destinations: .iOS,
             product: .framework,
-            bundleId: "com.digicom.AuthModule",
+            bundleId: "com.yourdomain.AuthModule",
+            deploymentTargets: .iOS("15.0"),
             infoPlist: .default,
             sources: ["Sources/**/*.swift"],
-            resources: [],
-            dependencies: []
-        ),
-        .target(
-            name: "WelcomeModule",
-            destinations: .iOS,
-            product: .framework,
-            bundleId: "com.digicom.WelcomeModule",
-            infoPlist: .default,
-            sources: ["Sources/**/*.swift"],
-            resources: [],
             dependencies: []
         )
     ]

@@ -2,7 +2,7 @@ import ProjectDescription
 
 let projectName = "Focus-Habit-Tracker"
 let bundleID = "com.yourcompany.FocusHabitTracker"
-let iOSTargetVersion = "16.0"
+let iOSTargetVersion = "15.0"
 let basePath = "."
 private let bundleVersion: String = "1"
 private let version: String = "0.0.1"
@@ -18,7 +18,8 @@ let project = Project(
             bundleId: bundleID,
             deploymentTargets: .iOS(iOSTargetVersion),
             infoPlist: makeInfoPlist(),
-            sources: ["\(basePath)/Sources/**"],
+            //            sources: ["\(basePath)/Sources/**"],
+            sources: ["Sources/**/*.swift"],
             resources: ["\(basePath)/Resources/**"],
             dependencies: [
                 .project(
@@ -65,7 +66,15 @@ private func baseSettings() -> Settings {
 private func makeInfoPlist(merging other: [String: Plist.Value] = [:]) -> InfoPlist {
     var extendedPlist: [String: Plist.Value] = [
         "UIApplicationSceneManifest": .dictionary([
-            "UIApplicationSupportsMultipleScenes": .boolean(true)
+            "UIApplicationSupportsMultipleScenes": .boolean(false),
+            "UISceneConfigurations": .dictionary([
+                "UIWindowSceneSessionRoleApplication": .array([
+                    .dictionary([
+                        "UISceneConfigurationName": .string("Default Configuration"),
+                        "UISceneDelegateClassName": .string("$(PRODUCT_MODULE_NAME).SceneDelegate")
+                    ])
+                ])
+            ])
         ]),
         "UILaunchScreen": .dictionary([:]),
         "UISupportedInterfaceOrientations": .array([

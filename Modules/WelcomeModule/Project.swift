@@ -1,7 +1,9 @@
 import ProjectDescription
 
+let projectName = "Focus-Habit-Tracker"
+
 let project = Project(
-    name: "WelcomeModule",
+    name: projectName,
     organizationName: "com.digicom",
     targets: [
         .target(
@@ -11,7 +13,7 @@ let project = Project(
             bundleId: "com.digicom.WelcomeModule",
             deploymentTargets: .iOS("15.0"),
             infoPlist: .default,
-            sources: ["Sources/**"],
+            sources: ["Sources/**/*.swift"],
             resources: [],
             dependencies: []
         )
