@@ -12,6 +12,6 @@ public class AuthModuleViewController: UIViewController {
         title.textAlignment = .center
         title.text = "Отряд Бетта!"
         title.font = .systemFont(ofSize: 30, weight: .bold)
-        view.backgroundColor = .green
+        view.backgroundColor = .red
     }
 }
