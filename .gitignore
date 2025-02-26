@@ -62,9 +62,20 @@ DerivedData/
 *.xcodeproj
 *.xcworkspace
 
-### Tuist derived files ###
+### Tuist generated files ###
+# Tuist should not generate or commit these files
 graph.dot
 Derived/
-
-### Tuist managed dependencies ###
 Tuist/.build
+Tuist/Generated/
+
+### Other generated files ###
+# Ignore Xcode's build output
+build/
+
+# Ignore User-specific files
+.idea/
+.vscode/
+
+# Ignore test logs
+test-reports/
