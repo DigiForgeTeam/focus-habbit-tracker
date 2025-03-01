@@ -32,6 +32,14 @@ let project = Project(
                 .project(
                     target: "HabbitsTracker",
                     path: "Modules/HabbitsTracker"
+                ),
+                .project(
+                    target: "UserProfile",
+                    path: "Modules/UserProfile"
+                ),
+                .project(
+                    target: "FocusTracker",
+                    path: "Modules/FocusTracker"
                 )
             ]
         ),
