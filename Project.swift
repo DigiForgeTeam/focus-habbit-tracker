@@ -18,7 +18,6 @@ let project = Project(
             bundleId: bundleID,
             deploymentTargets: .iOS(iOSTargetVersion),
             infoPlist: makeInfoPlist(),
-            //            sources: ["\(basePath)/Sources/**"],
             sources: ["Sources/**/*.swift"],
             resources: ["\(basePath)/Resources/**"],
             dependencies: [
@@ -29,6 +28,10 @@ let project = Project(
                 .project(
                     target: "WelcomeModule",
                     path: "Modules/WelcomeModule"
+                ),
+                .project(
+                    target: "HabbitsTracker",
+                    path: "Modules/HabbitsTracker"
                 )
             ]
         ),
