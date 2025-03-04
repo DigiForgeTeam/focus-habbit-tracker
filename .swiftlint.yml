@@ -1,0 +1,33 @@
+disabled_rules:
+  - force_cast
+  - force_try
+  - line_length
+  - vertical_whitespace
+
+force_unwrapping:
+  severity: error
+
+force_cast:
+  severity: error
+
+force_try:
+  severity: error
+
+line_length:
+  warning: 120
+  error: 150
+  ignores_urls: true
+
+vertical_whitespace:
+  warning: 1
+  error: 2
+
+trailing_whitespace:
+  severity: error
+
+trailing_newline:
+  severity: error
+
+included:
+  - ${PROJECT_DIR}/Sources
+  - ${PROJECT_DIR}/Tests

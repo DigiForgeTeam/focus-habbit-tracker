@@ -19,7 +19,19 @@ let project = Project(
             deploymentTargets: .iOS(iOSTargetVersion),
             infoPlist: makeInfoPlist(),
             sources: ["Sources/**/*.swift"],
-            resources: ["\(basePath)/Resources/**"],
+            resources: [
+                "\(basePath)/Scripts",
+                "\(basePath)/Resources/**",
+                "\(basePath)/.swiftlint.yml"
+            ],
+            scripts: [
+                .pre(
+                    script: "Scripts/SwiftLintRunScript.sh",
+                    name: "Run SwiftLint",
+                    outputPaths: [],
+                    basedOnDependencyAnalysis: false
+                )
+            ],
             dependencies: [
                 .project(
                     target: "AuthModule",
@@ -54,7 +66,7 @@ let project = Project(
             dependencies: [
                 .target(name: projectName)
             ]
-        ),
+        )
     ]
 )
 
@@ -100,4 +112,3 @@ private func makeInfoPlist(merging other: [String: Plist.Value] = [:]) -> InfoPl
     
     return .extendingDefault(with: extendedPlist)
 }
-
