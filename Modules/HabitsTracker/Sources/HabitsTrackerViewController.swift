@@ -1,7 +1,8 @@
 import UIKit
 
-class WelcomeModuleViewController: UIViewController {
-    var presenter: WelcomeModulePresenterProtocol!
+class HabbitsTrackerViewController: UIViewController {
+    var presenter: HabbitsTrackerPresenterProtocol!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()

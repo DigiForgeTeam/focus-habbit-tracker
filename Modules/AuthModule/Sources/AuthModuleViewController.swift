@@ -2,7 +2,7 @@ import UIKit
 
 public class AuthModuleViewController: UIViewController {
     var presenter: AuthModulePresenterProtocol!
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 //        presenter.viewDidLoad()

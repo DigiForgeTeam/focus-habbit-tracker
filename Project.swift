@@ -20,16 +20,18 @@ let project = Project(
             infoPlist: makeInfoPlist(),
             sources: ["Sources/**/*.swift"],
             resources: [
-                "\(basePath)/Scripts",
                 "\(basePath)/Resources/**",
-                "\(basePath)/.swiftlint.yml"
+                "\(basePath)/Scripts/**",
+                "\(basePath)/.swiftlint.yml",
             ],
             scripts: [
                 .pre(
-                    script: "Scripts/SwiftLintRunScript.sh",
-                    name: "Run SwiftLint",
-                    outputPaths: [],
-                    basedOnDependencyAnalysis: false
+                    path: .relativeToRoot(
+                        "Scripts/SwiftLintRunScript.sh"
+                    ),
+                    name: "SwiftLint",
+                    outputPaths: ["${PROJECT_DIR}/swiftlint_output.log"],
+                    basedOnDependencyAnalysis: true
                 )
             ],
             dependencies: [
