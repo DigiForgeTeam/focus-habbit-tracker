@@ -4,8 +4,8 @@ protocol FocusTrackerPresenterProtocol {
 
 class FocusTrackerPresenter: FocusTrackerPresenterProtocol {
     weak var view: FocusTrackerViewController?
-    
+
     func viewDidLoad() {
-        
+
     }
 }

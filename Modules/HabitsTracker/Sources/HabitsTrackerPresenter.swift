@@ -4,8 +4,8 @@ protocol HabbitsTrackerPresenterProtocol {
 
 class HabbitsTrackerPresenter: HabbitsTrackerPresenterProtocol {
     weak var view: HabbitsTrackerViewController?
-
+    
     func viewDidLoad() {
-
+        
     }
 }

@@ -4,8 +4,8 @@ protocol UserProfilePresenterProtocol {
 
 class UserProfilePresenter: UserProfilePresenterProtocol {
     weak var view: UserProfileViewController?
-    
+
     func viewDidLoad() {
-        
+
     }
 }

@@ -1,14 +1,25 @@
 #!/bin/bash
 
-if which swiftlint >/dev/null; then
-    echo "Running SwiftLint..."
-    swiftlint lint --strict
-else
-    echo "Warning: SwiftLint is not installed. Please install it from https://github.com/realm/SwiftLint"
+echo "Running SwiftLint..."
+
+# Path to the SwiftLint configuration file
+SWIFTLINT_CONFIG="${PROJECT_DIR}/.swiftlint.yml"
+echo "Using SwiftLint config: ${SWIFTLINT_CONFIG}"
+
+# Run SwiftLint with the specified config
+swiftlint --config "${SWIFTLINT_CONFIG}" --strict
+
+if [[ "$(uname -m)" == arm64 ]]
+then
+    export PATH="/opt/homebrew/bin:$PATH"
 fi
 
-#if which swiftlint >/dev/null; then
-#    swiftlint lint --config ${PROJECT_DIR}/.swiftlint.yml --strict
-#else
-#    echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-#fi
+if command -v swiftlint >/dev/null 2>&1
+then
+echo "Config file path: ${PROJECT_DIR}/.swiftlint.yml"
+#  swiftlint --config "${PROJECT_DIR}/.swiftlint.yml" --strict
+swiftlint --config "${SWIFTLINT_CONFIG}" --strict
+else
+    echo "warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions."
+fi
+

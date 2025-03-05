@@ -4,8 +4,7 @@ protocol AuthModulePresenterProtocol {
 
 class AuthModulePresenter: AuthModulePresenterProtocol {
     weak var view: AuthModuleViewController?
-    
+
     func viewDidLoad() {
-        
     }
 }

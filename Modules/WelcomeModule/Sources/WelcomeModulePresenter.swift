@@ -4,8 +4,6 @@ protocol WelcomeModulePresenterProtocol {
 
 class WelcomeModulePresenter: WelcomeModulePresenterProtocol {
     weak var view: WelcomeModuleViewController?
-    
     func viewDidLoad() {
-        
     }
 }
