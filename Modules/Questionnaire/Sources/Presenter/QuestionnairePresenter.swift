@@ -1,13 +1,13 @@
-protocol {{ name }}PresenterProtocol {
+protocol QuestionnairePresenterProtocol {
     // Define Presenter functions
     func presentData()
-    func handleError()
+    func handleError(_ error: Error)
 }
 
-class {{ name }}Presenter: {{ name }}PresenterProtocol {
-    private var model: {{ name }}ModelProtocol
+class QuestionnairePresenter: QuestionnairePresenterProtocol {
+    private var model: QuestionnaireModelProtocol
 
-    init(model: {{ name }}ModelProtocol) {
+    init(model: QuestionnaireModelProtocol) {
         self.model = model
     }
 

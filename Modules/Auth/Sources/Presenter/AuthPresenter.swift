@@ -1,13 +1,13 @@
-protocol {{ name }}PresenterProtocol {
+protocol AuthPresenterProtocol {
     // Define Presenter functions
     func presentData()
-    func handleError()
+    func handleError(_ error: Error)
 }
 
-class {{ name }}Presenter: {{ name }}PresenterProtocol {
-    private var model: {{ name }}ModelProtocol
+class AuthPresenter: AuthPresenterProtocol {
+    private var model: AuthModelProtocol
 
-    init(model: {{ name }}ModelProtocol) {
+    init(model: AuthModelProtocol) {
         self.model = model
     }
 

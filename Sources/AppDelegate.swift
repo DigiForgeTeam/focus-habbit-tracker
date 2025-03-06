@@ -1,5 +1,5 @@
 import UIKit
-import AuthModule
+import Auth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

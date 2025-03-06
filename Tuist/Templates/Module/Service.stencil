@@ -1,0 +1,10 @@
+protocol {{ name }}ServiceProtocol {
+    // Define service functions
+    func performNetworkRequest()
+}
+
+class {{ name }}Service: {{ name }}ServiceProtocol {
+    func performNetworkRequest() {
+        // Network request logic here
+    }
+}

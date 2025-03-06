@@ -1,10 +1,11 @@
 import ProjectDescription
 
+let projectName = "{{ project_name }}"
 let organizationName = "com.digicom"
-let moduleName = "UserProfile"
+let moduleName = "{{ module.name }}"
 
 let project = Project(
-    name: moduleName,
+    name: projectName,
     organizationName: organizationName,
     targets: [
         .target(

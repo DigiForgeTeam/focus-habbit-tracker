@@ -1,7 +1,7 @@
 import ProjectDescription
 
-let projectName = "Focus-Habit-Tracker"
-let bundleID = "com.yourcompany.FocusHabitTracker"
+let projectName = "Sleep-Tracker"
+let bundleID = "com.digicom.FocusHabitTracker"
 let iOSTargetVersion = "15.0"
 let basePath = "."
 private let bundleVersion: String = "1"
@@ -36,24 +36,28 @@ let project = Project(
             ],
             dependencies: [
                 .project(
-                    target: "AuthModule",
-                    path: "Modules/AuthModule"
+                    target: "Auth",
+                    path: "Modules/Auth"
                 ),
                 .project(
-                    target: "WelcomeModule",
-                    path: "Modules/WelcomeModule"
+                    target: "Questionnaire",
+                    path: "Modules/Questionnaire"
                 ),
                 .project(
-                    target: "HabbitsTracker",
-                    path: "Modules/HabbitsTracker"
+                    target: "Report",
+                    path: "Modules/Report"
+                ),
+                .project(
+                    target: "Shared",
+                    path: "Modules/Shared"
+                ),
+                .project(
+                    target: "SleepTracker",
+                    path: "Modules/SleepTracker"
                 ),
                 .project(
                     target: "UserProfile",
                     path: "Modules/UserProfile"
-                ),
-                .project(
-                    target: "FocusTracker",
-                    path: "Modules/FocusTracker"
                 )
             ]
         ),

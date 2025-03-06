@@ -1,13 +1,13 @@
-protocol {{ name }}PresenterProtocol {
+protocol SleepTrackerPresenterProtocol {
     // Define Presenter functions
     func presentData()
-    func handleError()
+    func handleError(_ error: Error)
 }
 
-class {{ name }}Presenter: {{ name }}PresenterProtocol {
-    private var model: {{ name }}ModelProtocol
+class SleepTrackerPresenter: SleepTrackerPresenterProtocol {
+    private var model: SleepTrackerModelProtocol
 
-    init(model: {{ name }}ModelProtocol) {
+    init(model: SleepTrackerModelProtocol) {
         self.model = model
     }
 
