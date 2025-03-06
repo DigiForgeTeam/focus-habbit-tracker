@@ -1,10 +1,10 @@
-protocol {{ name }}ModelProtocol {
+protocol UserProfileModelProtocol {
     // Define Model functions
     func fetchData()
     func saveData() -> Bool
 }
 
-class {{ name }}Model: {{ name }}ModelProtocol {
+class UserProfileModel: UserProfileModelProtocol {
     // Implement Model logic
     func fetchData() {
         // Your fetch logic here
@@ -12,5 +12,6 @@ class {{ name }}Model: {{ name }}ModelProtocol {
 
     func saveData() -> Bool {
         // Your save logic here
+        return true
     }
 }

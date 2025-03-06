@@ -1,7 +1,7 @@
 import ProjectDescription
 
 let organizationName = "com.digicom"
-let moduleName = "UserProfile"
+let moduleName = "Report"
 
 let project = Project(
     name: moduleName,
