@@ -1,7 +1,7 @@
 import ProjectDescription
 
 let projectName = "Sleep-Tracker"
-let bundleID = "com.digicom.FocusHabitTracker"
+let bundleID = "com.digicom.SleepTracker"
 let iOSTargetVersion = "15.0"
 let basePath = "."
 private let bundleVersion: String = "1"
@@ -21,7 +21,7 @@ let project = Project(
             sources: ["Sources/**/*.swift"],
             resources: [
                 "\(basePath)/Resources/**",
-                "\(basePath)/Scripts/**",
+//                "\(basePath)/Scripts/**",
                 "\(basePath)/.swiftlint.yml",
             ],
             scripts: [
