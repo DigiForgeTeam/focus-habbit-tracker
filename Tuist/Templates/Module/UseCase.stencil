@@ -1,0 +1,16 @@
+protocol {{ name }}UseCaseProtocol {
+    // Define UseCase functions
+    func execute()
+}
+
+class {{ name }}UseCase: {{ name }}UseCaseProtocol {
+    private var service: {{ name }}ServiceProtocol
+
+    init(service: {{ name }}ServiceProtocol) {
+        self.service = service
+    }
+
+    func execute() {
+        // Business logic here
+    }
+}

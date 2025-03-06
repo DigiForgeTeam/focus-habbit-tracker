@@ -1,7 +1,7 @@
 import ProjectDescription
 
-let projectName = "Focus-Habit-Tracker"
-let bundleID = "com.yourcompany.FocusHabitTracker"
+let projectName = "Sleep-Tracker"
+let bundleID = "com.digicom.FocusHabitTracker"
 let iOSTargetVersion = "15.0"
 let basePath = "."
 private let bundleVersion: String = "1"
@@ -19,27 +19,45 @@ let project = Project(
             deploymentTargets: .iOS(iOSTargetVersion),
             infoPlist: makeInfoPlist(),
             sources: ["Sources/**/*.swift"],
-            resources: ["\(basePath)/Resources/**"],
+            resources: [
+                "\(basePath)/Resources/**",
+                "\(basePath)/Scripts/**",
+                "\(basePath)/.swiftlint.yml",
+            ],
+            scripts: [
+                .pre(
+                    path: .relativeToRoot(
+                        "Scripts/SwiftLintRunScript.sh"
+                    ),
+                    name: "SwiftLint",
+                    outputPaths: ["${PROJECT_DIR}/swiftlint_output.log"],
+                    basedOnDependencyAnalysis: true
+                )
+            ],
             dependencies: [
                 .project(
-                    target: "AuthModule",
-                    path: "Modules/AuthModule"
+                    target: "Auth",
+                    path: "Modules/Auth"
                 ),
                 .project(
-                    target: "WelcomeModule",
-                    path: "Modules/WelcomeModule"
+                    target: "Questionnaire",
+                    path: "Modules/Questionnaire"
                 ),
                 .project(
-                    target: "HabbitsTracker",
-                    path: "Modules/HabbitsTracker"
+                    target: "Report",
+                    path: "Modules/Report"
+                ),
+                .project(
+                    target: "Shared",
+                    path: "Modules/Shared"
+                ),
+                .project(
+                    target: "SleepTracker",
+                    path: "Modules/SleepTracker"
                 ),
                 .project(
                     target: "UserProfile",
                     path: "Modules/UserProfile"
-                ),
-                .project(
-                    target: "FocusTracker",
-                    path: "Modules/FocusTracker"
                 )
             ]
         ),
@@ -54,7 +72,7 @@ let project = Project(
             dependencies: [
                 .target(name: projectName)
             ]
-        ),
+        )
     ]
 )
 
@@ -100,4 +118,3 @@ private func makeInfoPlist(merging other: [String: Plist.Value] = [:]) -> InfoPl
     
     return .extendingDefault(with: extendedPlist)
 }
-
