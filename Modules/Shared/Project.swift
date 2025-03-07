@@ -6,6 +6,12 @@ let moduleName = "Shared"
 let project = Project(
     name: moduleName,
     organizationName: organizationName,
+    packages: [
+        .remote(
+            url: "https://github.com/firebase/firebase-ios-sdk",
+            requirement: .upToNextMajor(from: "11.9.0")
+        )
+    ],
     targets: [
         .target(
             name: moduleName,
@@ -35,7 +41,16 @@ fi
                     basedOnDependencyAnalysis: true
                 )
             ],
-            dependencies: []
+            dependencies: [
+                .package(product: "FirebaseAuth"),
+//                .package(product: "FirebaseFirestore")
+            ],
+            settings: .settings(
+                base: [
+                    // Отключаем экспериментальную часть gRPC для предотвращения ошибок
+                    "OTHER_CFLAGS": "-DGRPC_EVENT_ENGINE=0"
+                ]
+            )
         )
     ]
 )

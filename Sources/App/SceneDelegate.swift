@@ -2,10 +2,10 @@ import UIKit
 import Auth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
+
     var window: UIWindow?
     var printAVC: String?
-    
+
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,

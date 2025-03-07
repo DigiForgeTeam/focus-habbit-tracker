@@ -1,3 +1,7 @@
+//import FirebaseAuth
+//import Firebase
+//import FirebaseFirestore
+
 protocol AuthServiceProtocol {
     // Define service functions
     func performNetworkRequest()

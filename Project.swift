@@ -21,7 +21,6 @@ let project = Project(
             sources: ["Sources/**/*.swift"],
             resources: [
                 "\(basePath)/Resources/**",
-//                "\(basePath)/Scripts/**",
                 "\(basePath)/.swiftlint.yml",
             ],
             scripts: [
