@@ -3,7 +3,7 @@ import Firebase
 import FirebaseFirestore
 import Shared
 
-protocol AuthServiceProtocol {
+public protocol AuthServiceProtocol {
     func registerUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 

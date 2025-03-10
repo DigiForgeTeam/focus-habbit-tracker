@@ -11,7 +11,7 @@ let project = Project(
             name: moduleName,
             destinations: .iOS,
             product: .framework,
-            bundleId: "com.digicom.\(moduleName)",
+            bundleId: "com.digicom.\(moduleName)Module",
             deploymentTargets: .iOS("15.0"),
             infoPlist: .default,
             sources: ["Sources/**/*.swift"],

@@ -10,6 +10,9 @@ private let version: String = "0.0.1"
 let project = Project(
     name: projectName,
     organizationName: "DigiCom",
+    packages: [
+        .remote(url: "https://github.com/Swinject/Swinject.git", requirement: .upToNextMajor(from: "2.9.1"))
+    ],
     targets: [
         .target(
             name: projectName,
@@ -57,7 +60,8 @@ let project = Project(
                 .project(
                     target: "UserProfile",
                     path: "Modules/UserProfile"
-                )
+                ),
+                .package(product: "SWinject")
             ]
         ),
         .target(

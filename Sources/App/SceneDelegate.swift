@@ -1,5 +1,6 @@
 import UIKit
 import Auth
+import Swinject
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

@@ -15,7 +15,7 @@ public final class AuthPresenter: AuthPresenterProtocol {
     private let authUseCase: AuthUseCaseProtocol
     private weak var view: AuthViewProtocol?
 
-    init(authUseCase: AuthUseCaseProtocol, view: AuthViewProtocol) {
+    public init(authUseCase: AuthUseCaseProtocol, view: AuthViewProtocol) {
         self.authUseCase = authUseCase
         self.view = view
     }

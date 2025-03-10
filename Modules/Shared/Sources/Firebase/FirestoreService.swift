@@ -1,8 +1,10 @@
-import FirebaseFirestore
+//import FirebaseFirestore
+import Foundation
+import FirebaseCore
 
 public final class FirestoreService {
     public static let shared = FirestoreService()
-    private let db = Firestore.firestore()
+//    private let db = Firestore.firestore()
 
     private init() {}
 
@@ -13,12 +15,12 @@ public final class FirestoreService {
             "createdAt": Timestamp(date: Date())
         ]
         
-        db.collection("users").document(uid).setData(userData) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(()))
-            }
-        }
+//        db.collection("users").document(uid).setData(userData) { error in
+//            if let error = error {
+//                completion(.failure(error))
+//            } else {
+//                completion(.success(()))
+//            }
+//        }
     }
 }
