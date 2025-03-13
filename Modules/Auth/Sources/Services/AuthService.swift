@@ -4,13 +4,32 @@ import FirebaseFirestore
 import Shared
 
 public protocol AuthServiceProtocol {
-    func registerUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func registerUser(
+        email: String,
+        password: String,
+        completion: @escaping (
+            Result<
+            Void,
+            Error
+            >
+        ) -> Void
+    )
 }
 
 public final class AuthService: AuthServiceProtocol {
-    public init() {}
+    
+    public init() { }
 
-    public func registerUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    public func registerUser(
+        email: String,
+        password: String,
+        completion: @escaping (
+            Result<
+            Void,
+            Error
+            >
+        ) -> Void
+    ) {
         FirebaseManager.shared.registerUser(email: email, password: password) { result in
             switch result {
             case .success(let uid):
