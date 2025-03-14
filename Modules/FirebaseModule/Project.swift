@@ -6,6 +6,12 @@ let moduleName = "FirebaseModule"
 let project = Project(
     name: moduleName,
     organizationName: organizationName,
+    packages: [
+        .remote(
+            url: "https://github.com/firebase/firebase-ios-sdk",
+            requirement: .upToNextMajor(from: "11.9.0")
+        )
+    ],
     targets: [
         .target(
             name: moduleName,
@@ -21,15 +27,15 @@ let project = Project(
             scripts: [
                 .pre(
                     script: """
-#!/bin/bash
-if command -v swiftlint >/dev/null 2>&1
-then
-echo "Running SwiftLint with config: ${PROJECT_DIR}/.swiftlint.yml"
-swiftlint --config "${PROJECT_DIR}/.swiftlint.yml" --strict
-else
-echo "warning: SwiftLint not found. Please install it via 'brew install swiftlint'."
-fi
-""",
+                    #!/bin/bash
+                    if command -v swiftlint >/dev/null 2>&1
+                    then
+                      echo "Running SwiftLint with config: ${PROJECT_DIR}/.swiftlint.yml"
+                      swiftlint --config "${PROJECT_DIR}/.swiftlint.yml" --strict
+                    else
+                      echo "warning: SwiftLint not found. Please install it via 'brew install swiftlint'."
+                    fi
+                    """,
                     name: "SwiftLint",
                     outputPaths: ["${PROJECT_DIR}/swiftlint_output.log"],
                     basedOnDependencyAnalysis: true

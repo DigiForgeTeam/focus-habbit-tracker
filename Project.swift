@@ -42,6 +42,10 @@ let project = Project(
                     path: "Modules/Auth"
                 ),
                 .project(
+                    target: "FirebaseModule",
+                    path: "Modules/FirebaseModule"
+                ),
+                .project(
                     target: "Questionnaire",
                     path: "Modules/Questionnaire"
                 ),
@@ -52,10 +56,6 @@ let project = Project(
                 .project(
                     target: "Shared",
                     path: "Modules/Shared"
-                ),
-                .project(
-                    target: "FirebaseModule",
-                    path: "Modules/FirebaseModule"
                 ),
                 .project(
                     target: "SleepTracker",
