@@ -1,41 +1,26 @@
-import Firebase
+//
+// AuthService.swift
+// Auth
+//
+// Created by Dmitriy Mk on 14.03.25.
+//
+
 import FirebaseAuth
-//import FirebaseFirestore
 import FirebaseModule
 
 public protocol AuthServiceProtocol {
-    func registerUser(email: String, password: String) async throws
+    func registerUser(email: String, password: String) async throws -> AuthDataResult
 }
 
 public final class AuthService: AuthServiceProtocol {
     
-    public init() { }
+    private let networkManager: NetworkServiceProtocol
     
-    //    public func registerUser(
-    //        email: String,
-    //        password: String,
-    //        completion: @escaping (Result<Void,Error>) -> Void
-    //    ) {
-    //        FirebaseManager.shared.registerUser(email: email, password: password) { result in
-    //            switch result {
-    //            case .success(let uid):
-    //                FirestoreService.shared.saveUserProfile(uid: uid, email: email) { saveResult in
-    //                    completion(saveResult)
-    //                }
-    //            case .failure(let error):
-    //                completion(.failure(error))
-    //            }
-    //        }
-    //    }
+    public init(networkManager: NetworkServiceProtocol = FirebaseManager.shared) {
+        self.networkManager = networkManager
+    }
     
-    public func registerUser(email: String, password: String) async throws {
-        do {
-//            let authResult = try await FirebaseManager.shared.registerUser(email: email, password: password)
-//            let uid = authResult.user.uid
-            
-//            try await FirestoreService.shared.saveUserProfile(uid: uid, email: email)
-        } catch {
-            throw error
-        }
+    public func registerUser(email: String, password: String) async throws -> AuthDataResult {
+        return try await networkManager.registerUser(email: email, password: password)
     }
 }

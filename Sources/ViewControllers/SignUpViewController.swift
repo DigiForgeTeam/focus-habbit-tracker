@@ -18,9 +18,10 @@ final class SignUpViewController: UIViewController, AuthViewProtocol {
     }
 
     func signUpButtonTapped() {
+        let name = "John"
         let email = "test@example.com"
         let password = "password123"
-        presenter.register(email: email, password: password)
+        presenter.register(name: name, email: email, password: password)
     }
 
     func showLoading() { }
