@@ -13,9 +13,10 @@ public protocol AuthUseCaseProtocol {
 }
 
 public final class AuthUseCase: AuthUseCaseProtocol {
-    private let authService: AuthService
     
-    public init(authService: AuthService) {
+    private let authService: AuthServiceProtocol
+    
+    public init(authService: AuthServiceProtocol) {
         self.authService = authService
     }
     

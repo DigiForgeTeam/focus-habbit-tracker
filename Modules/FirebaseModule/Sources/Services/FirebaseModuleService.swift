@@ -1,10 +1,10 @@
 import FirebaseAuth
 
-public protocol FirebaseModuleServiceProtocol {
+public protocol NetworkServiceProtocol {
     func registerUser(email: String, password: String) async throws -> AuthDataResult
 }
 
-public final class FirebaseManager: FirebaseModuleServiceProtocol {
+public final class FirebaseManager: NetworkServiceProtocol {
     
     public static let shared = FirebaseManager()
     

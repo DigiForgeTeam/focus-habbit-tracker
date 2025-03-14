@@ -14,9 +14,13 @@ public protocol AuthServiceProtocol {
 
 public final class AuthService: AuthServiceProtocol {
     
-    public init() { }
+    private let networkManager: NetworkServiceProtocol
+    
+    public init(networkManager: NetworkServiceProtocol = FirebaseManager.shared) {
+        self.networkManager = networkManager
+    }
     
     public func registerUser(email: String, password: String) async throws -> AuthDataResult {
-        return try await FirebaseManager.shared.registerUser(email: email, password: password)
+        return try await networkManager.registerUser(email: email, password: password)
     }
 }
