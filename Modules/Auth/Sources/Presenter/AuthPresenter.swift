@@ -1,3 +1,10 @@
+//
+// AuthPresenter.swift
+// Auth
+//
+// Created by Dmitriy Mk on 14.03.25.
+//
+
 import Foundation
 
 public protocol AuthPresenterProtocol {
@@ -22,17 +29,20 @@ public final class AuthPresenter: AuthPresenterProtocol {
 
     public func register(email: String, password: String) {
         view?.showLoading()
-        
-        authUseCase.register(email: email, password: password) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.view?.hideLoading()
-                switch result {
-                case .success:
-                    self?.view?.showSuccess()
-                case .failure(let error):
-                    self?.view?.showError(error.localizedDescription)
-                }
-            }
-        }
+
+//        Task {
+//            do {
+//                try await authUseCase.register(email: email, password: password)
+//                await MainActor.run { [weak self] in
+//                    self?.view?.hideLoading()
+//                    self?.view?.showSuccess()
+//                }
+//            } catch {
+//                await MainActor.run { [weak self] in
+//                    self?.view?.hideLoading()
+//                    self?.view?.showError(error.localizedDescription)
+//                }
+//            }
+//        }
     }
 }
