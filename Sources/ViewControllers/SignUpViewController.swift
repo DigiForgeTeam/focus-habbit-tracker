@@ -1,10 +1,11 @@
 import UIKit
 import Auth
 
-final class SignUpViewController: UIViewController, AuthViewProtocol {
-    private let presenter: AuthPresenterProtocol
+final class SignUpViewController: UIViewController, SignUpViewProtocol {
 
-    init(presenter: AuthPresenterProtocol) {
+    private let presenter: SignUpPresenterProtocol
+
+    init(presenter: SignUpPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }

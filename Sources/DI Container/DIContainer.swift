@@ -35,16 +35,16 @@ final class DIContainer {
     
     private func registrateAuthView() {
         container.register(SignUpViewController.self) { resolver in
-            let authPresenter = resolver.resolve(AuthPresenterProtocol.self)!
+            let authPresenter = resolver.resolve(SignUpPresenterProtocol.self)!
             return SignUpViewController(presenter: authPresenter)
         }
     }
 
     private func registrateAuthPresenter() {
-        container.register(AuthPresenterProtocol.self) { resolver in
+        container.register(SignUpPresenterProtocol.self) { resolver in
             let authUseCase = resolver.resolve(AuthUseCaseProtocol.self)!
             let view = resolver.resolve(SignUpViewController.self)!
-            return AuthPresenter(authUseCase: authUseCase, view: view)
+            return SignUpPresenter(authUseCase: authUseCase, view: view)
         }
     }
 

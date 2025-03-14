@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseFirestore
 
 public protocol AuthUseCaseProtocol {
     func register(name: String, email: String, password: String) async throws
@@ -15,7 +16,7 @@ public protocol AuthUseCaseProtocol {
 public final class AuthUseCase: AuthUseCaseProtocol {
 
     private let authService: AuthServiceProtocol
-    
+
     public init(authService: AuthServiceProtocol) {
         self.authService = authService
     }
@@ -24,14 +25,14 @@ public final class AuthUseCase: AuthUseCaseProtocol {
 
         do {
             let signUpResult = try await authService.registerUser(email: email, password: password)
-            let userData = User(
+            let userData = UserModel(
                 uid: signUpResult.user.uid,
                 name: name,
-                email: signUpResult.user.email,
-                photoURL: signUpResult.user.photoURL?.absoluteString
+                email: signUpResult.user.email ?? ""
             )
 
             // persiste userData on Firestore and CoreData (to SignIn registered User without connection to network)
+            
         } catch let error as NSError {
             switch error.code {
             case AuthErrorCode.weakPassword.rawValue:
