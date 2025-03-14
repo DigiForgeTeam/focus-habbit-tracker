@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol AuthPresenterProtocol {
-    func register(email: String, password: String)
+    func register(name: String, email: String, password: String)
 }
 
 public protocol AuthViewProtocol: AnyObject {
@@ -27,22 +27,40 @@ public final class AuthPresenter: AuthPresenterProtocol {
         self.view = view
     }
 
-    public func register(email: String, password: String) {
+    public func register(name: String, email: String, password: String) {
         view?.showLoading()
 
-//        Task {
-//            do {
-//                try await authUseCase.register(email: email, password: password)
-//                await MainActor.run { [weak self] in
-//                    self?.view?.hideLoading()
-//                    self?.view?.showSuccess()
-//                }
-//            } catch {
-//                await MainActor.run { [weak self] in
-//                    self?.view?.hideLoading()
-//                    self?.view?.showError(error.localizedDescription)
-//                }
-//            }
-//        }
+        Task {
+            do {
+                try await authUseCase.register(name: name, email: email, password: password)
+                await MainActor.run { [weak self] in
+                    self?.view?.hideLoading()
+                    self?.view?.showSuccess()
+                }
+            } catch let error as SignUpError {
+                await MainActor.run { [weak self] in
+                    self?.view?.hideLoading()
+                    
+                    let errorDescription: String
+                    switch error {
+                    case .weakPassword:
+                        errorDescription = "User password is too weak"
+                        print(errorDescription)
+                    case .operationNotAllowed:
+                        errorDescription = "Sing up operation is not allowed"
+                        print(errorDescription)
+                    case .expiredActionCode:
+                        errorDescription = "Action code is expired"
+                        print(errorDescription)
+                    case .invalidActionCode:
+                        errorDescription = "Action code is invalid"
+                        print(errorDescription)
+                    case .unknown(let error):
+                        errorDescription = error.localizedDescription
+                    }
+                    self?.view?.showError(errorDescription)
+                }
+            }
+        }
     }
 }
