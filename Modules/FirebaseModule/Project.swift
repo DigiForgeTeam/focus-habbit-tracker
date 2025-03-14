@@ -1,18 +1,11 @@
 import ProjectDescription
 
 let organizationName = "com.digicom"
-let moduleName = "Auth"
-let projectName = "Focus-Habbit-Tracker"
+let moduleName = "FirebaseModule"
 
 let project = Project(
     name: moduleName,
     organizationName: organizationName,
-    packages: [
-        .remote(
-            url: "https://github.com/firebase/firebase-ios-sdk",
-            requirement: .upToNextMajor(from: "11.9.0")
-        )
-    ],
     targets: [
         .target(
             name: moduleName,
@@ -44,12 +37,15 @@ fi
             ],
             dependencies: [
                 .package(product: "FirebaseAuth"),
-                .package(product: "FirebaseFirestore"),
-                .project(
-                    target: "FirebaseModule",
-                    path: "../FirebaseModule"
-                )
+                // .package(product: "FirebaseFirestore")
             ]
+            //            ,
+            //            settings: .settings(
+            //                base: [
+            //                    // Отключаем экспериментальную часть gRPC для предотвращения ошибок
+            //                    "OTHER_CFLAGS": "-DGRPC_EVENT_ENGINE=0"
+            //                ]
+            //            )
         )
     ]
 )

@@ -54,6 +54,10 @@ let project = Project(
                     path: "Modules/Shared"
                 ),
                 .project(
+                    target: "FirebaseModule",
+                    path: "Modules/FirebaseModule"
+                ),
+                .project(
                     target: "SleepTracker",
                     path: "Modules/SleepTracker"
                 ),
