@@ -15,7 +15,6 @@ import Foundation
 /// in with the specified identity provider.
 /// * `AuthErrorCodeExpiredActionCode` - Indicates the OOB code is expired.
 /// * `AuthErrorCodeInvalidActionCode` - Indicates the OOB code is invalid.
-///
 public enum SignUpError: Error {
     case weakPassword
     case operationNotAllowed

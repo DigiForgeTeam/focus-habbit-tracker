@@ -1,28 +1,29 @@
 //
-// AuthPresenter.swift
-// Auth
+// SignUpPresenter.swift
+// Sleep-Tracker
 //
 // Created by Dmitriy Mk on 14.03.25.
 //
 
 import Foundation
+import Auth
 
-public protocol AuthPresenterProtocol {
+public protocol SignUpPresenterProtocol {
     func register(name: String, email: String, password: String)
 }
 
-public protocol AuthViewProtocol: AnyObject {
+public protocol SignUpViewProtocol: AnyObject {
     func showLoading()
     func hideLoading()
     func showSuccess()
     func showError(_ message: String)
 }
 
-public final class AuthPresenter: AuthPresenterProtocol {
+public final class SignUpPresenter: SignUpPresenterProtocol {
     private let authUseCase: AuthUseCaseProtocol
-    private weak var view: AuthViewProtocol?
+    private weak var view: SignUpViewProtocol?
 
-    public init(authUseCase: AuthUseCaseProtocol, view: AuthViewProtocol) {
+    public init(authUseCase: AuthUseCaseProtocol, view: SignUpViewProtocol) {
         self.authUseCase = authUseCase
         self.view = view
     }
