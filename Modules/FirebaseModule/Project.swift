@@ -37,15 +37,8 @@ fi
             ],
             dependencies: [
                 .package(product: "FirebaseAuth"),
-                // .package(product: "FirebaseFirestore")
+                .package(product: "FirebaseFirestore")
             ]
-            //            ,
-            //            settings: .settings(
-            //                base: [
-            //                    // Отключаем экспериментальную часть gRPC для предотвращения ошибок
-            //                    "OTHER_CFLAGS": "-DGRPC_EVENT_ENGINE=0"
-            //                ]
-            //            )
         )
     ]
 )

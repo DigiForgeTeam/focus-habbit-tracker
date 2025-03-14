@@ -9,12 +9,13 @@ import Foundation
 import FirebaseAuth
 
 
-public struct UserModel: Codable {
-    
+public struct UserModel: Encodable {
+
     public let uid: String
     public let name: String
     public let email: String
     public let photoURL: String?
+    public let photoData: Data?
     public let age: Int?
     public let gender: UserGender?
     public let weight: Int?
@@ -24,12 +25,13 @@ public struct UserModel: Codable {
     public let usualSleepHoursCount: Int?
     public let scheduleConsistency: ScheduleConsistency?
     public let fallAsleepLevel: FallAsleepLevel?
-    
+
     public init(
         uid: String,
         name: String,
         email: String,
         photoURL: String? = nil,
+        photoData: Data? = nil,
         age: Int? = nil,
         gender: UserGender? = nil,
         weight: Int? = nil,
@@ -44,6 +46,7 @@ public struct UserModel: Codable {
         self.name = name
         self.email = email
         self.photoURL = photoURL
+        self.photoData = photoData
         self.age = age
         self.gender = gender
         self.weight = weight
@@ -54,7 +57,7 @@ public struct UserModel: Codable {
         self.scheduleConsistency = scheduleConsistency
         self.fallAsleepLevel = fallAsleepLevel
     }
-    
+
     public enum UserGender: String, Codable {
         case male
         case female
@@ -73,7 +76,7 @@ public struct UserModel: Codable {
         case hard
         case veryHard
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case uid
         case name
@@ -88,5 +91,23 @@ public struct UserModel: Codable {
         case usualSleepHoursCount
         case scheduleConsistency
         case fallAsleepLevel
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(uid, forKey: .uid)
+        try container.encode(name, forKey: .name)
+        try container.encode(email, forKey: .email)
+        try container.encode(photoURL, forKey: .photoURL)
+        try container.encode(age, forKey: .age)
+        try container.encode(gender, forKey: .gender)
+        try container.encode(weight, forKey: .weight)
+        try container.encode(height, forKey: .height)
+        try container.encode(usualTimeForSleep, forKey: .usualTimeForSleep)
+        try container.encode(usualTimeForWakeUp, forKey: .usualTimeForWakeUp)
+        try container.encode(usualSleepHoursCount, forKey: .usualSleepHoursCount)
+        try container.encode(scheduleConsistency, forKey: .scheduleConsistency)
+        try container.encode(fallAsleepLevel, forKey: .fallAsleepLevel)
     }
 }

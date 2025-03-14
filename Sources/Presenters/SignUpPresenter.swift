@@ -41,7 +41,7 @@ public final class SignUpPresenter: SignUpPresenterProtocol {
             } catch let error as SignUpError {
                 await MainActor.run { [weak self] in
                     self?.view?.hideLoading()
-                    
+
                     let errorDescription: String
                     switch error {
                     case .weakPassword:
