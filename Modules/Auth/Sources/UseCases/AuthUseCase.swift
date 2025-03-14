@@ -13,15 +13,15 @@ public protocol AuthUseCaseProtocol {
 }
 
 public final class AuthUseCase: AuthUseCaseProtocol {
-    
+
     private let authService: AuthServiceProtocol
     
     public init(authService: AuthServiceProtocol) {
         self.authService = authService
     }
-    
+
     public func register(name: String, email: String, password: String) async throws {
-        
+
         do {
             let signUpResult = try await authService.registerUser(email: email, password: password)
             let userData = User(
@@ -30,7 +30,7 @@ public final class AuthUseCase: AuthUseCaseProtocol {
                 email: signUpResult.user.email,
                 photoURL: signUpResult.user.photoURL?.absoluteString
             )
-            
+
             // persiste userData on Firestore and CoreData (to SignIn registered User without connection to network)
         } catch let error as NSError {
             switch error.code {
@@ -46,7 +46,7 @@ public final class AuthUseCase: AuthUseCaseProtocol {
                 throw SignUpError.unknown(error)
             }
         }
-        
+
         //TODO: К примеру тут делаем валидацию по почте, после успешной регистрации пользователя
     }
 }
