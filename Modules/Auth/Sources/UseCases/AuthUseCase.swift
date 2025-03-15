@@ -22,7 +22,7 @@ public final class AuthUseCase: AuthUseCaseProtocol {
     }
 
     public func register(name: String, email: String, password: String) async throws {
-
+        
         do {
             let signUpResult = try await authService.registerUser(email: email, password: password)
             let userData = UserModel(
@@ -53,7 +53,7 @@ public final class AuthUseCase: AuthUseCaseProtocol {
                     print("Попытка \(attempts) сохранить имя пользователя завершилась ошибкой: \(error.localizedDescription)")
 
                     if attempts < maxAttempts {
-                        try await Task.sleep(nanoseconds: 1_000_000_000) // 1 секунда
+                        try await Task.sleep(nanoseconds: 1_000_000_000)
                     }
                 }
             }
@@ -62,7 +62,7 @@ public final class AuthUseCase: AuthUseCaseProtocol {
                 throw SignUpError.failToStoreUserName(error.localizedDescription)
             }
             
-            // Persist to CoreData to
+#warning("Persist username to CoreData Manager")
             
         } catch {
             if let signUpError = error as? SignUpError {
