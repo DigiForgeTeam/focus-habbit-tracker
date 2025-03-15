@@ -32,7 +32,7 @@ final class DIContainer {
             return AuthUseCase(authService: authService)
         }
     }
-    
+
     private func registrateAuthView() {
         container.register(SignUpViewController.self) { resolver in
             let authPresenter = resolver.resolve(SignUpPresenterProtocol.self)!
