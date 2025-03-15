@@ -20,6 +20,8 @@ public enum SignUpError: Error {
     case operationNotAllowed
     case expiredActionCode
     case invalidActionCode
+    case failToStoreUserName(String)
+    case emptyUID(String)
     case unknown(Error)
     
     public var localizedDescription: String {
@@ -32,6 +34,10 @@ public enum SignUpError: Error {
             return "The action code has expired."
         case .invalidActionCode:
             return "The action code is invalid."
+        case .failToStoreUserName(let error):
+            return error
+        case .emptyUID(let error):
+            return error
         case .unknown(let error):
             return error.localizedDescription
         }

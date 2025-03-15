@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 
+
 public protocol AuthUseCaseProtocol {
     func register(name: String, email: String, password: String) async throws
 }
@@ -30,10 +31,45 @@ public final class AuthUseCase: AuthUseCaseProtocol {
                 email: signUpResult.user.email ?? ""
             )
 
-            // persiste userData on Firestore and CoreData (to SignIn registered User without connection to network)
+            // Цикл для повторных попыток сохраниния данных пользователя
             
-        } catch let error as NSError {
-            switch error.code {
+            guard !userData.uid.isEmpty else {
+                throw SignUpError.emptyUID("Invalid UID: UID is empty")
+            }
+            
+            let maxAttempts = 3
+            var attempts = 0
+            var lastError: Error?
+
+            while attempts < maxAttempts {
+                do {
+                    try await authService.persistUserName(name, with: userData.uid)
+                    print("Имя пользователя успешно сохранено с попытки \(attempts + 1)")
+                    lastError = nil
+                    break
+                } catch {
+                    attempts += 1
+                    lastError = error
+                    print("Попытка \(attempts) сохранить имя пользователя завершилась ошибкой: \(error.localizedDescription)")
+
+                    if attempts < maxAttempts {
+                        try await Task.sleep(nanoseconds: 1_000_000_000) // 1 секунда
+                    }
+                }
+            }
+
+            if let error = lastError {
+                throw SignUpError.failToStoreUserName(error.localizedDescription)
+            }
+            
+            // Persist to CoreData to
+            
+        } catch {
+            if let signUpError = error as? SignUpError {
+                throw signUpError
+            }
+            let nsError = error as NSError
+            switch nsError.code {
             case AuthErrorCode.weakPassword.rawValue:
                 throw SignUpError.weakPassword
             case AuthErrorCode.operationNotAllowed.rawValue:
@@ -43,7 +79,7 @@ public final class AuthUseCase: AuthUseCaseProtocol {
             case AuthErrorCode.invalidActionCode.rawValue:
                 throw SignUpError.invalidActionCode
             default:
-                throw SignUpError.unknown(error)
+                throw SignUpError.unknown(nsError)
             }
         }
 

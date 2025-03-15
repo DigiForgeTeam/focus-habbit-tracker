@@ -2,12 +2,17 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
-public final class FirestoreService {
+public protocol FirestoreServiceProtocol {
+    func saveUserProfile(uid: String, email: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func saveUserName(_ name: String, uid: String) async throws
+}
+
+public final class FirestoreService: FirestoreServiceProtocol {
     
     public static let shared = FirestoreService()
     private let db = Firestore.firestore()
 
-    private init() {}
+    private init() { }
 
     public func saveUserProfile(uid: String, email: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let userData: [String: Any] = [
@@ -23,5 +28,12 @@ public final class FirestoreService {
                 completion(.success(()))
             }
         }
+    }
+    
+    public func saveUserName(_ name: String, uid: String) async throws {
+        
+        let userData: [String: Any] = [ "name": name ]
+        
+        try await db.collection("users").document(uid).setData(userData, merge: true)
     }
 }

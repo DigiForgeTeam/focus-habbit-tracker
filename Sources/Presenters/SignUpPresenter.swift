@@ -56,6 +56,12 @@ public final class SignUpPresenter: SignUpPresenterProtocol {
                     case .invalidActionCode:
                         errorDescription = "Action code is invalid"
                         print(errorDescription)
+                    case .failToStoreUserName(let error):
+                        errorDescription = "\(error)"
+                        print(errorDescription)
+                    case .emptyUID(let error):
+                        errorDescription = error
+                        print(errorDescription)
                     case .unknown(let error):
                         errorDescription = error.localizedDescription
                     }
