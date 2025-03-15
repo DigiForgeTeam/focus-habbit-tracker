@@ -7,6 +7,8 @@
 
 import Foundation
 import Auth
+import Shared
+
 
 public protocol SignUpPresenterProtocol {
     func register(name: String, email: String, password: String)
@@ -29,6 +31,13 @@ public final class SignUpPresenter: SignUpPresenterProtocol {
     }
 
     public func register(name: String, email: String, password: String) {
+        
+        guard NetworkMonitor.shared.isConnected else {
+            print("No internet connection")
+            // TODO: handle no connection
+            return
+        }
+        
         view?.showLoading()
 
         Task {

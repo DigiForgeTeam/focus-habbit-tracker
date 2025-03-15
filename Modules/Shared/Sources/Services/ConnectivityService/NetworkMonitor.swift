@@ -8,7 +8,13 @@
 import Foundation
 import Network
 
-public final class ConnectivityService {
+
+protocol ConnectivityService {
+    var isConnected: Bool { get }
+}
+
+
+public final class NetworkMonitor: ConnectivityService {
     
     public static let shared = NetworkMonitor()
     
