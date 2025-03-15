@@ -9,25 +9,24 @@ import Foundation
 import Network
 
 
-protocol ConnectivityService {
+public protocol ConnectivityServiceProtocol {
     var isConnected: Bool { get }
+    func startMonitoring()
+    func stopMonitoring()
 }
 
-
-public final class NetworkMonitor: ConnectivityService {
-    
-    public static let shared = NetworkMonitor()
-    
+public final class NetworkMonitor: ConnectivityServiceProtocol {
+        
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue.global(qos: .background)
     
     @Published public private(set) var isConnected: Bool = false
     
-    private init() {
+    public init() {
         startMonitoring()
     }
     
-    private func startMonitoring() {
+    public func startMonitoring() {
         monitor.pathUpdateHandler = { [weak self] path in
             DispatchQueue.main.async {
                 self?.isConnected = path.status == .satisfied

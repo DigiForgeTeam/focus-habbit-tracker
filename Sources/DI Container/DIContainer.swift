@@ -1,6 +1,15 @@
+//
+// ConnectivityService.swift
+// Shared
+//
+// Created by Dmitriy Mk on 15.03.25.
+//
+
 import Foundation
 import Swinject
 import Auth
+import Shared
+
 
 final class DIContainer {
 
@@ -13,15 +22,16 @@ final class DIContainer {
 
     private func registerServices() {
         self.registrateAuthService()
-        self.registrateAuthPresenter()
         self.registrateAuthUseCase()
-        self.registrateAuthView()
+        self.registrateNetworkingMonitor()
+        self.registrateSignUpViewController()
+        self.registrateSignUpPresenter()
     }
 
     private func registrateAuthService() {
         container.register(AuthServiceProtocol.self) { _ in
             return AuthService()
-        }
+        }.inObjectScope(.container)
     }
 
     private func registrateAuthUseCase() {
@@ -30,21 +40,36 @@ final class DIContainer {
                 fatalError()
             }
             return AuthUseCase(authService: authService)
-        }
+        }.inObjectScope(.container)
     }
-
-    private func registrateAuthView() {
-        container.register(SignUpViewController.self) { resolver in
+    
+    private func registrateNetworkingMonitor() {
+        container.register(ConnectivityServiceProtocol.self) { resolver in
+            return NetworkMonitor()
+        }.inObjectScope(.container)
+    }
+    
+    private func registrateSignUpViewController() {
+        container.register(SignUpViewProtocol.self) { resolver in
             let authPresenter = resolver.resolve(SignUpPresenterProtocol.self)!
             return SignUpViewController(presenter: authPresenter)
         }
     }
 
-    private func registrateAuthPresenter() {
+    private func registrateSignUpPresenter() {
         container.register(SignUpPresenterProtocol.self) { resolver in
             let authUseCase = resolver.resolve(AuthUseCaseProtocol.self)!
-            let view = resolver.resolve(SignUpViewController.self)!
-            return SignUpPresenter(authUseCase: authUseCase, view: view)
+            let connectivityMonitor = resolver.resolve(ConnectivityServiceProtocol.self)!
+            return SignUpPresenter(
+                authUseCase: authUseCase,
+                networkMonitor: connectivityMonitor
+            )
+        }
+        .initCompleted { resolver, presenter in
+            if let presenter = presenter as? SignUpPresenter,
+               let view = resolver.resolve(SignUpViewProtocol.self) {
+                presenter.view = view
+            }
         }
     }
 

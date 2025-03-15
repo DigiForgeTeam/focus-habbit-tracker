@@ -1,6 +1,14 @@
 import UIKit
 import Auth
 
+
+public protocol SignUpViewProtocol: AnyObject {
+    func showLoading()
+    func hideLoading()
+    func showSuccess()
+    func showError(_ message: String)
+}
+
 final class SignUpViewController: UIViewController, SignUpViewProtocol {
 
     private let presenter: SignUpPresenterProtocol

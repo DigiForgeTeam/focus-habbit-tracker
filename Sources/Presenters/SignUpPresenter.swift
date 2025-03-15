@@ -14,30 +14,28 @@ public protocol SignUpPresenterProtocol {
     func register(name: String, email: String, password: String)
 }
 
-public protocol SignUpViewProtocol: AnyObject {
-    func showLoading()
-    func hideLoading()
-    func showSuccess()
-    func showError(_ message: String)
-}
-
 public final class SignUpPresenter: SignUpPresenterProtocol {
-    private let authUseCase: AuthUseCaseProtocol
-    private weak var view: SignUpViewProtocol?
 
-    public init(authUseCase: AuthUseCaseProtocol, view: SignUpViewProtocol) {
+    private let authUseCase: AuthUseCaseProtocol
+    private let networkMonitor: ConnectivityServiceProtocol
+    weak var view: SignUpViewProtocol?
+
+    public init(
+        authUseCase: AuthUseCaseProtocol,
+        networkMonitor: ConnectivityServiceProtocol
+    ) {
         self.authUseCase = authUseCase
-        self.view = view
+        self.networkMonitor = networkMonitor
     }
 
     public func register(name: String, email: String, password: String) {
-        
-        guard NetworkMonitor.shared.isConnected else {
+
+        guard networkMonitor.isConnected else {
             print("No internet connection")
             // TODO: handle no connection
             return
         }
-        
+
         view?.showLoading()
 
         Task {

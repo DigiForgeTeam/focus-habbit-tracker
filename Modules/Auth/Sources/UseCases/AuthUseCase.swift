@@ -7,7 +7,6 @@
 
 import Foundation
 import FirebaseAuth
-import Shared
 
 
 public protocol AuthUseCaseProtocol {
