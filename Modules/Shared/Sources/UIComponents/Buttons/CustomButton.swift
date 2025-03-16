@@ -3,15 +3,15 @@
 import UIKit
 
 // MARK: - CustomButton
-class CustomButton: UIButton {
+public class CustomButton: UIButton {
     //MARK: Constants
     enum Constants {
-        static let height: CGFloat = 48
+        static let height: CGFloat = 48.adaptedHeight
         static let cornerRadius: CGFloat = 14
     }
     
     // MARK: - Properties
-    override var isEnabled: Bool {
+    public override var isEnabled: Bool {
            didSet {
                updateState()
            }
@@ -29,10 +29,10 @@ class CustomButton: UIButton {
 }
 
 // MARK: - Public Methods
-extension CustomButton {
+public extension CustomButton {
     func configure(title: String, width: CGFloat, isEnabled: Bool = true) {
         setTitle(title, for: .normal)
-        widthAnchor.constraint(equalToConstant: width).isActive = true
+        widthAnchor.constraint(equalToConstant: width.adaptedWidth).isActive = true
         self.isEnabled = isEnabled
     }
 }
@@ -43,7 +43,8 @@ private extension CustomButton {
         layer.cornerRadius = Constants.cornerRadius
         heightAnchor.constraint(equalToConstant: Constants.height).isActive = true
         setTitleColor(AppColor.secondaryText.color, for: .normal)
-        titleLabel?.font = UIFont.systemFont(ofSize: 16)  //изменить когда будет заведен шрифт
+#warning("Заменить шрифт")
+        titleLabel?.font = UIFont.systemFont(ofSize: 16)
         updateState()
     }
     
@@ -51,3 +52,4 @@ private extension CustomButton {
         backgroundColor = isEnabled ? AppColor.buttonTabBarBackground.color : AppColor.buttonTabBarBackground.color.withAlphaComponent(0.7)
     }
 }
+

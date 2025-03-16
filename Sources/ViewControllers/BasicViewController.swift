@@ -1,6 +1,7 @@
 
 
 import UIKit
+import Shared
 
 // MARK: - BasicProtocol
 protocol BasicProtocol: AnyObject {
@@ -10,16 +11,16 @@ protocol BasicProtocol: AnyObject {
 }
     
 // MARK: - BasicViewController
-class BasicViewController: UIViewController {
+public class BasicViewController: UIViewController {
     //MARK: Constants
     enum Constants {
         enum NavigationBar {
-            static let height: CGFloat = 44
-            static let insets = UIEdgeInsets(top: 44, left: 19, bottom: .zero, right: -19)
+            static let height: CGFloat = 44.adaptedHeight
+            static let insets = UIEdgeInsets(top: 44.adaptedHeight, left: 19.adaptedWidth, bottom: .zero, right: -19.adaptedWidth)
         }
         enum TabBar {
-            static let height: CGFloat = 53
-            static let insets = UIEdgeInsets(top: .zero, left: 19, bottom: -27, right: -19)
+            static let height: CGFloat = 53.adaptedHeight
+            static let insets = UIEdgeInsets(top: .zero, left: 19.adaptedWidth, bottom: -27.adaptedHeight, right: -19.adaptedWidth)
             static let cornerRadius: CGFloat = 26
         }
     }
@@ -44,7 +45,7 @@ class BasicViewController: UIViewController {
     }()
     
     // MARK: - Lifecycle
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         setNavBarTitle("BasicViewController")

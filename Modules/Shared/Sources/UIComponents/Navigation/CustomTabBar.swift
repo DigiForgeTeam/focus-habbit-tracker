@@ -1,14 +1,14 @@
 
 import UIKit
 
-protocol CustomTabBarDelegate: AnyObject {
+public protocol CustomTabBarDelegate: AnyObject {
     func tabBarDidSelect(indexTabBar: Int)
 }
 
-class CustomTabBar: UIView {
+public class CustomTabBar: UIView {
     //MARK: Contants
     enum Constants {
-        static let insets = UIEdgeInsets(top: 14, left: 24, bottom: -14, right: -24)
+        static let insets = UIEdgeInsets(top: 14.adaptedHeight, left: 24.adaptedWidth, bottom: -14.adaptedHeight, right: -24.adaptedWidth)
     }
     
     // MARK: - Properties
@@ -88,3 +88,4 @@ private extension CustomTabBar {
         }
     }
 }
+

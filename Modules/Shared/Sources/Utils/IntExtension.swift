@@ -1,9 +1,15 @@
-//
-//  IntExtension.swift
-//  Shared
-//
-//  Created by Вячеслав Пучков on 16.03.2025.
-//  Copyright © 2025 com.digicom. All rights reserved.
-//
 
-import Foundation
+import UIKit
+
+// MARK: - Extension Int
+public extension Int {
+    
+    // MARK: - Properties
+    var adaptedHeight: CGFloat {
+        return CGFloat(self).adaptedHeight
+    }
+    
+    var adaptedWidth: CGFloat {
+        return CGFloat(self).adaptedWidth
+    }
+}

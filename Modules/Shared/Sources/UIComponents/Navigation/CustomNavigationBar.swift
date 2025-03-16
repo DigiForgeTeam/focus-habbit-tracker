@@ -2,23 +2,19 @@
 
 import UIKit
 
-protocol CustomNavBarDelegate: AnyObject {
+public protocol CustomNavBarDelegate: AnyObject {
     func backButtonTapped()
 }
 
-class CustomNavigationBar: UIView {
+public class CustomNavigationBar: UIView {
     // MARK: - Constants
     enum Constants {
         enum Button {
-            static let size = CGSize(width: 13, height: 17)
+            static let size = CGSize(width: 13.adaptedWidth, height: 17.adaptedHeight)
             static let shadowColor = UIColor.white.cgColor
             static let shadowOpacity: Float = 0.2
             static let shadowOffset = CGSize(width: 0, height: 2)
             static let shadowRadius: CGFloat = 4
-        }
-        
-        enum Label {
-            static let size = CGSize(width: 200, height: 20)
         }
     }
     
@@ -29,6 +25,7 @@ class CustomNavigationBar: UIView {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+#warning("Заменить шрифт")
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.textColor = AppColor.primaryText.color
         label.textAlignment = .center
@@ -60,7 +57,7 @@ class CustomNavigationBar: UIView {
 }
 
 // MARK: - Public Methods
-extension CustomNavigationBar {
+public extension CustomNavigationBar {
     func setTitle(_ title: String) {
         titleLabel.text = title
     }

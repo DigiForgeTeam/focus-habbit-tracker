@@ -1,9 +1,15 @@
-//
-//  CGFloatExtension.swift
-//  Shared
-//
-//  Created by Вячеслав Пучков on 16.03.2025.
-//  Copyright © 2025 com.digicom. All rights reserved.
-//
 
-import Foundation
+import UIKit
+
+// MARK: - Extension CGFloat
+public extension CGFloat {
+    
+    // MARK: - Properties
+    var adaptedHeight: CGFloat {
+        return self * (UIScreen.main.bounds.height / 812.0)
+    }
+    
+    var adaptedWidth: CGFloat {
+        return self * (UIScreen.main.bounds.width / 375.0)
+    }
+}

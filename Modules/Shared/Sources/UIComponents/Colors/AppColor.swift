@@ -1,13 +1,7 @@
-//
-//  AppColor.swift
-//  HelpProject
-//
-//  Created by Вячеслав Пучков on 14.03.2025.
-//
 
 import UIKit
 
-enum AppColor {
+public enum AppColor {
     
     case background         // Фон приложения
     case surface            // Поверхности карточек, модальных окон
@@ -21,7 +15,7 @@ enum AppColor {
     case tabBarInactive     // Цвет неактивного таббара
     case tabBarActive       // Цвет активного таббара
     
-    var color: UIColor {
+    public var color: UIColor {
         switch self {
         case .background:
             return UIColor(dynamicLight: "#0B0B19", dark: "#0B0B19")
@@ -49,7 +43,7 @@ enum AppColor {
     }
 }
 
-extension UIColor {
+public extension UIColor {
     convenience init(hex: String, alpha: CGFloat = 1.0) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
