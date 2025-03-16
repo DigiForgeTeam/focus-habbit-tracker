@@ -8,13 +8,6 @@
 import Foundation
 import Network
 
-
-public protocol ConnectivityServiceProtocol {
-    var isConnected: Bool { get }
-    func startMonitoring()
-    func stopMonitoring()
-}
-
 public final class NetworkMonitor: ConnectivityServiceProtocol {
         
     private let monitor = NWPathMonitor()
