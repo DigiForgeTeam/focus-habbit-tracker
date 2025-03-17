@@ -6,10 +6,10 @@ public extension CGFloat {
     
     // MARK: - Properties
     var adaptedHeight: CGFloat {
-        return self * (UIScreen.main.bounds.height / 812.0)
+        return self * (UIScreen.main.bounds.height / 844.0)
     }
     
     var adaptedWidth: CGFloat {
-        return self * (UIScreen.main.bounds.width / 375.0)
+        return self * (UIScreen.main.bounds.width / 390.0)
     }
 }
