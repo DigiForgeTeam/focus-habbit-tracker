@@ -15,11 +15,11 @@ public protocol SignUpPresenterProtocol {
 }
 
 public final class SignUpPresenter: SignUpPresenterProtocol {
-
+    
     private let authUseCase: AuthUseCaseProtocol
     private let networkMonitor: ConnectivityServiceProtocol
     weak var view: SignUpViewProtocol?
-
+    
     public init(
         authUseCase: AuthUseCaseProtocol,
         networkMonitor: ConnectivityServiceProtocol
@@ -27,17 +27,17 @@ public final class SignUpPresenter: SignUpPresenterProtocol {
         self.authUseCase = authUseCase
         self.networkMonitor = networkMonitor
     }
-
+    
     public func register(name: String, email: String, password: String) {
-
+        
         guard networkMonitor.isConnected else {
             print("No internet connection")
             // TODO: handle no connection
             return
         }
-
+        
         view?.showLoading()
-
+        
         Task {
             do {
                 try await authUseCase.register(name: name, email: email, password: password)
@@ -48,7 +48,7 @@ public final class SignUpPresenter: SignUpPresenterProtocol {
             } catch let error as SignUpError {
                 await MainActor.run { [weak self] in
                     self?.view?.hideLoading()
-
+                    
                     let errorDescription: String
                     switch error {
                     case .weakPassword:
@@ -65,6 +65,9 @@ public final class SignUpPresenter: SignUpPresenterProtocol {
                         print(errorDescription)
                     case .failToStoreUserName(let error):
                         errorDescription = "\(error)"
+                        print(errorDescription)
+                    case .emailValidationFailed(let error):
+                        errorDescription = error
                         print(errorDescription)
                     case .emptyUID(let error):
                         errorDescription = error
