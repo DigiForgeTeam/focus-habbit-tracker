@@ -14,6 +14,7 @@ public class CustomTextField: UITextField {
     enum Constants {
         static let size = CGSize(width: 342.adaptedWidth, height: 44.adaptedHeight)
         static let cornerRadius: CGFloat = 10
+        static let borderWidth: CGFloat = 1
     }
     
     // MARK: - Init
@@ -33,7 +34,7 @@ public class CustomTextField: UITextField {
 private extension CustomTextField {
     private func setupTextField() {
         backgroundColor = AppColor.textFieldBackground.color
-        layer.borderWidth = 1
+        layer.borderWidth = Constants.borderWidth
         layer.borderColor = AppColor.borderGray.color.cgColor
         heightAnchor.constraint(equalToConstant: Constants.size.height).isActive = true
         widthAnchor.constraint(equalToConstant: Constants.size.width).isActive = true
@@ -51,7 +52,7 @@ private extension CustomTextField {
              )
          }
         
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 24.adaptedWidth, height: .zero))
+        let paddingView = UIView(frame: CGRect(x: .zero, y: .zero, width: 24.adaptedWidth, height: .zero))
         leftView = paddingView
         leftViewMode = .always
     }
