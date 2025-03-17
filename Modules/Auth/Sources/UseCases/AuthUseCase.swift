@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 import PersistanceManager
+import OSLog
 
 
 public protocol AuthUseCaseProtocol {
@@ -18,12 +19,19 @@ public final class AuthUseCase: AuthUseCaseProtocol {
 
     private let authService: AuthServiceProtocol
     private let userDataManager: UserDataManagerProtocol
+    private let logger = Logger(subsystem: "com.yourapp.auth", category: "Auth")
 
     public init(authService: AuthServiceProtocol, userDataManager: UserDataManagerProtocol) {
         self.authService = authService
         self.userDataManager = userDataManager
     }
 
+    // MARK: - Busines logic
+    
+    public func isUserLoggedIn() -> Bool {
+        authService.isUserSignedIn()
+    }
+    
     public func register(name: String, email: String, password: String) async throws {
         
         do {
@@ -33,65 +41,95 @@ public final class AuthUseCase: AuthUseCaseProtocol {
                 name: name,
                 email: signUpResult.user.email ?? ""
             )
-
-            // Цикл для повторных попыток сохраниния данных пользователя
             
-            guard !userData.uid.isEmpty else {
-                throw SignUpError.emptyUID("Invalid UID: UID is empty")
-            }
+            // MARK: Send email validation code
+            try await sendValidationEmail()
             
-            let maxAttempts = 3
-            var attempts = 0
-            var lastError: Error?
+            // MARK: Persiste user data to CoreData
+            persistUserDataToLocalDataBase(userData)
 
-            while attempts < maxAttempts {
-                do {
-                    
-                    // Persiste username to Firestore
-                    try await authService.persistUserName(name, with: userData.uid)
-                    
-                    // Persiste user data to CoreData
-                    if let userModelDictionary = userData.asDictionary() {
-                        userDataManager.createUser(with: userModelDictionary)
-                    }
-                    
-                    print("Имя пользователя успешно сохранено с попытки \(attempts + 1)")
-                    lastError = nil
-                    break
-                } catch {
-                    attempts += 1
-                    lastError = error
-                    print("Попытка \(attempts) сохранить имя пользователя завершилась ошибкой: \(error.localizedDescription)")
-
-                    if attempts < maxAttempts {
-                        try await Task.sleep(nanoseconds: 1_000_000_000)
-                    }
-                }
-            }
-
-            if let error = lastError {
-                throw SignUpError.failToStoreUserName(error.localizedDescription)
-            }
+            // MARK: Цикл для повторных попыток сохраниния данных пользователя
+            try await checkUserIDAndPersistToFireStore(userData, name)
             
         } catch {
-            if let signUpError = error as? SignUpError {
-                throw signUpError
-            }
-            let nsError = error as NSError
-            switch nsError.code {
-            case AuthErrorCode.weakPassword.rawValue:
-                throw SignUpError.weakPassword
-            case AuthErrorCode.operationNotAllowed.rawValue:
-                throw SignUpError.operationNotAllowed
-            case AuthErrorCode.expiredActionCode.rawValue:
-                throw SignUpError.expiredActionCode
-            case AuthErrorCode.invalidActionCode.rawValue:
-                throw SignUpError.invalidActionCode
-            default:
-                throw SignUpError.unknown(nsError)
+            throw mapFirebaseAuthError(error)
+        }
+    }
+    
+    private func sendValidationEmail() async throws {
+        if let currentUser = Auth.auth().currentUser {
+            do {
+                try await currentUser.reload()
+                try await currentUser.sendEmailVerification()
+            } catch {
+                logger.error("Failed to send email verification code: \(error.localizedDescription)")
+                throw SignUpError.emailValidationFailed("Failed to send email verification code: \(error.localizedDescription)")
             }
         }
+    }
+    
+    private func persistUserDataToLocalDataBase(_ userData: UserModel) {
+        Task.detached {
+            if let userModelDictionary = userData.asDictionary() {
+                self.userDataManager.createUser(with: userModelDictionary)
+            }
+        }
+    }
+    
+    private func checkUserIDAndPersistToFireStore(_ userData: UserModel, _ name: String) async throws {
+        guard !userData.uid.isEmpty else {
+            logger.error("Invalid UID: UID is empty")
+            throw SignUpError.emptyUID("Invalid UID: UID is empty")
+        }
+        
+        try await retry(times: 3, delay: 1) { [ weak self ] in
+            try await self?.authService.persistUserName(name, with: userData.uid)
+        }
+    }
+    
+    func retry<T>(
+        times: Int,
+        delay: TimeInterval,
+        task: @escaping () async throws -> T
+    ) async throws -> T {
+        var attempts = 0
+        var lastError: Error?
+        
+        while attempts < times {
+            do {
+                return try await task()
+            } catch {
+                lastError = error
+                attempts += 1
+                if attempts < times {
+                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                }
+            }
+        }
+        
+        let currentError = lastError?.localizedDescription ?? "Unknown error during retry"
+        logger.error("Fails \(attempts) to store user name with error: \(currentError)")
+        throw SignUpError.failToStoreUserName(currentError)
+    }
+    
+    func mapFirebaseAuthError(_ error: Error) -> SignUpError {
+        guard let nsError = error as NSError?,
+              let authError = AuthErrorCode(rawValue: nsError.code) else {
+            logger.error("Unknown error: \(error.localizedDescription)")
+            return .unknown(error)
+        }
 
-        //TODO: К примеру тут делаем валидацию по почте, после успешной регистрации пользователя
+        switch authError {
+        case .weakPassword:
+            return .weakPassword
+        case .operationNotAllowed:
+            return .operationNotAllowed
+        case .expiredActionCode:
+            return .expiredActionCode
+        case .invalidActionCode:
+            return .invalidActionCode
+        default:
+            return .unknown(error)
+        }
     }
 }

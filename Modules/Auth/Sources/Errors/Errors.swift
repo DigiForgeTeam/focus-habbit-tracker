@@ -22,6 +22,7 @@ public enum SignUpError: Error {
     case invalidActionCode
     case failToStoreUserName(String)
     case emptyUID(String)
+    case emailValidationFailed(String)
     case unknown(Error)
     
     public var localizedDescription: String {
@@ -35,6 +36,8 @@ public enum SignUpError: Error {
         case .invalidActionCode:
             return "The action code is invalid."
         case .failToStoreUserName(let error):
+            return error
+        case .emailValidationFailed(let error):
             return error
         case .emptyUID(let error):
             return error
