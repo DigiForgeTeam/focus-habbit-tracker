@@ -6,12 +6,6 @@ let moduleName = "Auth"
 let project = Project(
     name: moduleName,
     organizationName: organizationName,
-//    packages: [
-//        .remote(
-//            url: "https://github.com/firebase/firebase-ios-sdk",
-//            requirement: .upToNextMajor(from: "11.9.0")
-//        )
-//    ],
     targets: [
         .target(
             name: moduleName,
@@ -42,11 +36,13 @@ fi
                 )
             ],
             dependencies: [
-//                .package(product: "FirebaseAuth"),
-//                .package(product: "FirebaseFirestore"),
                 .project(
                     target: "FirebaseModule",
                     path: "../FirebaseModule"
+                ),
+                .project(
+                    target: "PersistanceManager",
+                    path: "../PersistanceManager"
                 )
             ]
         )
