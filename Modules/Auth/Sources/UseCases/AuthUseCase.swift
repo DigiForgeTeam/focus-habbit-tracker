@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import PersistanceManager
 
 
 public protocol AuthUseCaseProtocol {
@@ -16,9 +17,11 @@ public protocol AuthUseCaseProtocol {
 public final class AuthUseCase: AuthUseCaseProtocol {
 
     private let authService: AuthServiceProtocol
+    private let userDataManager: UserDataManagerProtocol
 
-    public init(authService: AuthServiceProtocol) {
+    public init(authService: AuthServiceProtocol, userDataManager: UserDataManagerProtocol) {
         self.authService = authService
+        self.userDataManager = userDataManager
     }
 
     public func register(name: String, email: String, password: String) async throws {
@@ -43,7 +46,15 @@ public final class AuthUseCase: AuthUseCaseProtocol {
 
             while attempts < maxAttempts {
                 do {
+                    
+                    // Persiste username to Firestore
                     try await authService.persistUserName(name, with: userData.uid)
+                    
+                    // Persiste user data to CoreData
+                    if let userModelDictionary = userData.asDictionary() {
+                        userDataManager.createUser(with: userModelDictionary)
+                    }
+                    
                     print("Имя пользователя успешно сохранено с попытки \(attempts + 1)")
                     lastError = nil
                     break
@@ -61,8 +72,6 @@ public final class AuthUseCase: AuthUseCaseProtocol {
             if let error = lastError {
                 throw SignUpError.failToStoreUserName(error.localizedDescription)
             }
-            
-#warning("Persist username to CoreData Manager")
             
         } catch {
             if let signUpError = error as? SignUpError {

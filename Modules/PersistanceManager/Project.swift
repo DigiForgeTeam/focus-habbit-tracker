@@ -1,7 +1,7 @@
 import ProjectDescription
 
 let organizationName = "com.digicom"
-let moduleName = "Auth"
+let moduleName = "PersistanceManager"
 
 let project = Project(
     name: moduleName,
@@ -35,16 +35,7 @@ fi
                     basedOnDependencyAnalysis: true
                 )
             ],
-            dependencies: [
-                .project(
-                    target: "FirebaseModule",
-                    path: "../FirebaseModule"
-                ),
-                .project(
-                    target: "PersistanceManager",
-                    path: "../PersistanceManager"
-                )
-            ]
+            dependencies: []
         )
     ]
 )

@@ -9,6 +9,7 @@ import Foundation
 import Swinject
 import Auth
 import Shared
+import PersistanceManager
 
 
 final class DIContainer {
@@ -22,6 +23,8 @@ final class DIContainer {
 
     private func registerServices() {
         self.registrateAuthService()
+        self.registratePersistanceManager()
+        self.registrateUserDataManager()
         self.registrateAuthUseCase()
         self.registrateNetworkingMonitor()
         self.registrateSignUpViewController()
@@ -33,13 +36,32 @@ final class DIContainer {
             return AuthService()
         }.inObjectScope(.container)
     }
+    
+    private func registratePersistanceManager() {
+        container.register(PersistanceManagerProtocol.self) { _ in
+            return CoreDataManager()
+        }.inObjectScope(.container)
+    }
+    
+    private func registrateUserDataManager() {
+        container.register(UserDataManagerProtocol.self) { resolver in
+            guard let persistanceManager = resolver.resolve(PersistanceManagerProtocol.self) else {
+                fatalError()
+            }
+            return UserDataManager(persistanceManager: persistanceManager)
+        }.inObjectScope(.container)
+    }
 
     private func registrateAuthUseCase() {
         container.register(AuthUseCaseProtocol.self) { resolver in
-            guard let authService = resolver.resolve(AuthServiceProtocol.self) as? AuthService else {
+            guard
+                let authService = resolver.resolve(AuthServiceProtocol.self) as? AuthService,
+                let userDataManager = resolver.resolve(UserDataManagerProtocol.self)
+            else {
                 fatalError()
             }
-            return AuthUseCase(authService: authService)
+            return AuthUseCase(authService: authService,
+                               userDataManager: userDataManager)
         }.inObjectScope(.container)
     }
     
