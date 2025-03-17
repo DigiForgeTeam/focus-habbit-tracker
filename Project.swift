@@ -65,6 +65,10 @@ let project = Project(
                     target: "UserProfile",
                     path: "Modules/UserProfile"
                 ),
+                .project(
+                    target: "PersistanceManager",
+                    path: "Modules/PersistanceManager"
+                ),
                 .package(product: "SWinject")
             ]
         ),
