@@ -8,10 +8,6 @@
 import FirebaseAuth
 import FirebaseModule
 
-public protocol AuthServiceProtocol {
-    func registerUser(email: String, password: String) async throws -> AuthDataResult
-    func persistUserName(_ name: String, with uid: String) async throws
-}
 
 public final class AuthService: AuthServiceProtocol {
     
@@ -30,5 +26,13 @@ public final class AuthService: AuthServiceProtocol {
     
     public func persistUserName(_ name: String, with uid: String) async throws {
         try await storeService.saveUserName(name, uid: uid)
+    }
+    
+    public func isUserSignedIn() -> Bool {
+        if Auth.auth().currentUser != nil {
+            return true
+        } else {
+            return false
+        }
     }
 }

@@ -24,6 +24,12 @@ public final class AuthUseCase: AuthUseCaseProtocol {
         self.userDataManager = userDataManager
     }
 
+    // MARK: - Busines logic
+    
+    public func isUserLoggedIn() -> Bool {
+        authService.isUserSignedIn()
+    }
+
     public func register(name: String, email: String, password: String) async throws {
         
         do {
@@ -33,6 +39,18 @@ public final class AuthUseCase: AuthUseCaseProtocol {
                 name: name,
                 email: signUpResult.user.email ?? ""
             )
+            
+            // MARK: Send email validation code
+            do {
+                try await Auth.auth().currentUser?.sendEmailVerification()
+            } catch {
+                throw SignUpError.emailValidationFailed("Failed to send email verification code: \(error.localizedDescription)")
+            }
+            
+            // MARK: Persiste user data to CoreData
+            if let userModelDictionary = userData.asDictionary() {
+                userDataManager.createUser(with: userModelDictionary)
+            }
 
             // Цикл для повторных попыток сохраниния данных пользователя
             
@@ -47,17 +65,13 @@ public final class AuthUseCase: AuthUseCaseProtocol {
             while attempts < maxAttempts {
                 do {
                     
-                    // Persiste username to Firestore
+                    // MARK: Persiste username to Firestore
                     try await authService.persistUserName(name, with: userData.uid)
-                    
-                    // Persiste user data to CoreData
-                    if let userModelDictionary = userData.asDictionary() {
-                        userDataManager.createUser(with: userModelDictionary)
-                    }
                     
                     print("Имя пользователя успешно сохранено с попытки \(attempts + 1)")
                     lastError = nil
                     break
+                    
                 } catch {
                     attempts += 1
                     lastError = error
@@ -91,7 +105,5 @@ public final class AuthUseCase: AuthUseCaseProtocol {
                 throw SignUpError.unknown(nsError)
             }
         }
-
-        //TODO: К примеру тут делаем валидацию по почте, после успешной регистрации пользователя
     }
 }
