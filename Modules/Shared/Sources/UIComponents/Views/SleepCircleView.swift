@@ -26,7 +26,7 @@ public class SleepCircleView: UIView {
     private let timeFormat: TimeFormat
     
     // MARK: - Init
-    init(sleepHours: CGFloat,
+    public init(sleepHours: CGFloat,
          currentDay: String,
          timeFormat: TimeFormat = .twentyFourHour) {
         self.sleepHours = sleepHours
@@ -93,6 +93,7 @@ private extension SleepCircleView {
         
         NSLayoutConstraint.activate([
             dayLabel.topAnchor.constraint(equalTo: circularProgressView.bottomAnchor, constant: 3),
+            dayLabel.heightAnchor.constraint(equalTo: circularProgressView.heightAnchor, multiplier: 0.2),
             dayLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             dayLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             dayLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
