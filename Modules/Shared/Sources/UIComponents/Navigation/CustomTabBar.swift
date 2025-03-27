@@ -43,7 +43,6 @@ public class CustomTabBar: UIView {
 private extension CustomTabBar {
     // MARK: - UI Setup
     func configureUI() {
-        let insets = Constants.insets
         
         icons.enumerated().forEach { index, icon in
             let button = createTabButton(with: icon, isSelected: index == 0)

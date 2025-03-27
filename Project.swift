@@ -1,7 +1,7 @@
 import ProjectDescription
 
 let projectName = "Sleep-Tracker"
-let bundleID = "com.digicom.FocusHabitTracker"
+let bundleID = "com.digicom.SleepTracker"
 let iOSTargetVersion = "15.0"
 let basePath = "."
 private let bundleVersion: String = "1"
@@ -10,6 +10,9 @@ private let version: String = "0.0.1"
 let project = Project(
     name: projectName,
     organizationName: "DigiCom",
+    packages: [
+        .remote(url: "https://github.com/Swinject/Swinject.git", requirement: .upToNextMajor(from: "2.9.1"))
+    ],
     targets: [
         .target(
             name: projectName,
@@ -21,7 +24,6 @@ let project = Project(
             sources: ["Sources/**/*.swift"],
             resources: [
                 "\(basePath)/Resources/**",
-                "\(basePath)/Scripts/**",
                 "\(basePath)/.swiftlint.yml",
             ],
             scripts: [
@@ -38,6 +40,10 @@ let project = Project(
                 .project(
                     target: "Auth",
                     path: "Modules/Auth"
+                ),
+                .project(
+                    target: "FirebaseModule",
+                    path: "Modules/FirebaseModule"
                 ),
                 .project(
                     target: "Questionnaire",
@@ -58,7 +64,12 @@ let project = Project(
                 .project(
                     target: "UserProfile",
                     path: "Modules/UserProfile"
-                )
+                ),
+                .project(
+                    target: "PersistanceManager",
+                    path: "Modules/PersistanceManager"
+                ),
+                .package(product: "SWinject")
             ]
         ),
         .target(

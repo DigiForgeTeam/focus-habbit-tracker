@@ -35,7 +35,16 @@ fi
                     basedOnDependencyAnalysis: true
                 )
             ],
-            dependencies: []
+            dependencies: [
+                .project(
+                    target: "FirebaseModule",
+                    path: "../FirebaseModule"
+                ),
+                .project(
+                    target: "PersistanceManager",
+                    path: "../PersistanceManager"
+                )
+            ]
         )
     ]
 )

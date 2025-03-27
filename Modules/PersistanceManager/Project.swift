@@ -1,7 +1,7 @@
 import ProjectDescription
 
 let organizationName = "com.digicom"
-let moduleName = "SleepTracker"
+let moduleName = "PersistanceManager"
 
 let project = Project(
     name: moduleName,
@@ -11,12 +11,15 @@ let project = Project(
             name: moduleName,
             destinations: .iOS,
             product: .framework,
-            bundleId: "com.digicom.\(moduleName)Module",
+            bundleId: "com.digicom.\(moduleName)",
             deploymentTargets: .iOS("15.0"),
             infoPlist: .default,
-            sources: ["Sources/**/*.swift"],
+            sources: [
+                "Sources/**/*.swift"
+            ],
             resources: [
-                ".swiftlint.yml"
+                ".swiftlint.yml",
+                "Sources/Models/MainDataModel.xcdatamodeld"
             ],
             scripts: [
                 .pre(
