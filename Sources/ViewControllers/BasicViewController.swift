@@ -44,11 +44,26 @@ public class BasicViewController: UIViewController {
         return view
     }()
     
+    //
+    lazy var testCircleView: SleepCircleView = {
+        let view = SleepCircleView(sleepHours: 10, currentDay: "Wd")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        view.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        return view
+    }()
+    
     // MARK: - Lifecycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         setNavBarTitle("BasicViewController")
+        
+        view.addSubview(testCircleView)
+        NSLayoutConstraint.activate([
+            testCircleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            testCircleView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 }
 
