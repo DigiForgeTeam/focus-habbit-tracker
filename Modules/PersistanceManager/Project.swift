@@ -14,9 +14,12 @@ let project = Project(
             bundleId: "com.digicom.\(moduleName)",
             deploymentTargets: .iOS("15.0"),
             infoPlist: .default,
-            sources: ["Sources/**/*.swift"],
+            sources: [
+                "Sources/**/*.swift"
+            ],
             resources: [
-                ".swiftlint.yml"
+                ".swiftlint.yml",
+                "Sources/Models/MainDataModel.xcdatamodeld"
             ],
             scripts: [
                 .pre(
